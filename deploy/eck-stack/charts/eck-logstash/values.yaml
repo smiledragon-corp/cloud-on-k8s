@@ -1,0 +1,74 @@
+---
+# Default values for eck-logstash.
+# This is a YAML-formatted file.
+
+# Overridable names of the Logstash resource.
+# By default, this is the Release name set for the chart,
+# followed by 'eck-logstash'.
+#
+# nameOverride will override the name of the Chart with the name set here,
+# so nameOverride: quickstart, would convert to '{{ Release.name }}-quickstart'
+#
+# nameOverride: "quickstart"
+#
+# fullnameOverride will override both the release name, and the chart name,
+# and will name the Logstash resource exactly as specified.
+#
+# fullnameOverride: "quickstart"
+
+# Version of Logstash.
+#
+version: 8.10.0-SNAPSHOT
+
+# Labels that will be applied to Logstash.
+#
+labels: {}
+
+# Annotations that will be applied to Logstash.
+#
+annotations: {}
+
+spec:
+  # Count of Logstash replicas to create.
+  #
+  count: 1
+
+  elasticsearchRefs:
+    - name: eck-elasticsearch
+    # Optional namespace reference to Elasticsearch resource.
+    # If not specified, then the namespace of the Logstash resource
+    # will be assumed.
+    #
+    # namespace: default
+
+  # Configures Logstash pipelines.
+  #
+  # pipelines:
+  #   - pipeline.id: main
+  #     config.string: |
+  #       input {
+  #         beats {
+  #           port => 5044
+  #         }
+  #       }
+  #       output {
+  #         elasticsearch {
+  #           hosts => [ "${QS_ES_HOSTS}" ]
+  #           user => "${QS_ES_USER}"
+  #           password => "${QS_ES_PASSWORD}"
+  #           ssl_certificate_authorities => "${QS_ES_SSL_CERTIFICATE_AUTHORITY}"
+  #         }
+  #       }
+
+  # Configures Logstash service.
+  #
+  # services:
+  #   - name: beats
+  #     service:
+  #       spec:
+  #         type: NodePort
+  #         ports:
+  #           - port: 5044
+  #             name: 'filebeat'
+  #             protocol: TCP
+  #             targetPort: 5044
